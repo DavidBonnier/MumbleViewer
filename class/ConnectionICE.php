@@ -17,7 +17,7 @@ abstract class ConnectionICE
 	private $m_ipMumbleICE = "127.0.0.1";
 	private $m_portMumbleICE = "6502";
 
-	private $m_timeoutMumbleICE = "10";
+	private $m_timeoutMumbleICE = "20";
 
 	//Mot de passe a utiliser a chaque fois
 	protected $m_iceScecet = array('secret' => 'lire');
