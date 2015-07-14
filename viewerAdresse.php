@@ -7,32 +7,34 @@
 	Problème principale, fonction getTree ne retourne pas les channels dans l'ordre.
 	Obliger de faire un trie dans l'ordre des positions puis l'ordre alphabétique
 */
-
-if(empty($_GET['police']))
-	$_GET['police'] = 'Verdana';
-else
-	$_GET['police'] = htmlentities($_GET['police'], ENT_QUOTES);
-
-if(empty($_GET['taille']))
-	$_GET['taille'] = '12';
-else
-	$_GET['taille'] = htmlentities($_GET['taille'], ENT_QUOTES);
-
-if(empty($_GET['couleur']))
-	$_GET['couleur'] = 'Black';
-else
-	$_GET['couleur'] = htmlentities($_GET['couleur'], ENT_QUOTES);
-
-if(empty($_GET['serverid']))
-	$serverid = -1;
-else
-	$serverid = $_GET['serverid'];
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Mumble Viewer FlyerDavid</title>
+	<title>Mumble Viewer, ZenServ</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<?php
+		if(empty($_GET['police']))
+			$_GET['police'] = 'Verdana';
+		else
+			$_GET['police'] = htmlentities($_GET['police'], ENT_NOQUOTES, "UTF-8");
+
+		if(empty($_GET['taille']))
+			$_GET['taille'] = '12';
+		else
+			$_GET['taille'] = htmlentities($_GET['taille'], ENT_NOQUOTES, "UTF-8");
+
+		if(empty($_GET['couleur']))
+			$_GET['couleur'] = 'Black';
+		else
+			$_GET['couleur'] = htmlentities($_GET['couleur'], ENT_NOQUOTES, "UTF-8");
+	?>
+    
     <style type="text/css"> 
 		.div_channel {
 		margin: 0px;
@@ -42,7 +44,7 @@ else
 		border-style: hidden;
 		border-color: blue;
 		font-family: <?php echo $_GET['police']; ?>;
-		font-size: <?php echo $_GET['taille'];'px'; ?>;
+		font-size: <?php echo $_GET['taille'].'px'; ?>;
 		color:<?php echo $_GET['couleur']; ?>;
 		}
 		.div_player {
@@ -80,24 +82,23 @@ else
 
 		function set_Layer(layername)
 		{
-
 			theImage = layername;
 
 			if (document.images[theImage].src.match('mid2'))
 			{
-				document.images[theImage].src = './images/list_tree_mid3.gif';
+				document.images[theImage].src = 'images/list_tree_mid3.gif';
 			} 
 			else if (document.images[theImage].src.match('mid3'))
 			{
-				document.images[theImage].src = './images/list_tree_mid2.gif';
+				document.images[theImage].src = 'images/list_tree_mid2.gif';
 			} 
 			else if (document.images[theImage].src.match('end2'))
 			{
-				document.images[theImage].src = './images/list_tree_end3.gif';
+				document.images[theImage].src = 'images/list_tree_end3.gif';
 			} 
 			else if (document.images[theImage].src.match('end3'))
 			{
-				document.images[theImage].src = './images/list_tree_end2.gif';
+				document.images[theImage].src = 'images/list_tree_end2.gif';
 			} 
 
 			theLayer = layername;
@@ -153,28 +154,28 @@ else
 		while($count < $channeldepth)
 	    {
 			if ($menustatus[$count] == 0)
-				echo "<img border=0 src=./images/list_tree_space.gif>";
+				echo "<img src=\"images/list_tree_space.gif\" alt=\"\" >";
 			else
-				echo "<img border=0 src=./images/list_tree_line.gif>";
+				echo "<img src=\"images/list_tree_line.gif\" alt=\"\" >";
 		    $count++;
 	    }
 
 		if (count($channelobject['children']) + count($channelobject['users']) > 0)
 		{
 			if ($channelobject[0]->id != $lastid)
-				echo "<a href=\"javascript:set_Layer('div_channel_".$channelobject[0]->id."')\"><img border=0 name=div_channel_".$channelobject[0]->id." src=./images/list_tree_mid2.gif></a>";
+				echo "<a href=\"javascript:set_Layer('div_channel_".$channelobject[0]->id."')\"><img name=div_channel_".$channelobject[0]->id." src=\"images/list_tree_mid2.gif\" alt=\"\"></a>";
 			else
-				echo "<a href=\"javascript:set_Layer('div_channel_".$channelobject[0]->id."')\"><img border=0 name=div_channel_".$channelobject[0]->id." src=./images/list_tree_end2.gif></a>";
+				echo "<a href=\"javascript:set_Layer('div_channel_".$channelobject[0]->id."')\"><img name=div_channel_".$channelobject[0]->id." src=\"images/list_tree_end2.gif\" alt=\"\"></a>";
 		}
 		else 
 		{
 			if ($channelobject[0]->id != $lastid)
-				echo "<img border=0 src=./images/list_tree_mid.gif>";
+				echo "<img src=\"images/list_tree_mid.gif\" alt=\"\">";
 			else
-				echo "<img border=0 src=./images/list_tree_end.gif>";
+				echo "<img src=\"images/list_tree_end.gif\" alt=\"\">";
 		}
 
-		echo "<img border=0 src=./images/list_channel.gif>";
+		echo "<img src=\"images/list_channel.gif\" alt=\"\">";
 		echo "<a href=\"".$url."".str_replace(" ","%20",$channelobject[0]->name)."\">".$channelobject[0]->name."</a><br>\n";
 
 		if (count($channelobject['children']) + count($channelobject['users']) > 0)
@@ -192,7 +193,7 @@ else
 
 	function printplayers($playerobject, $lastid, $channeldepth, $menustatus) 
 	{
-		echo "<div class=div_player id=div_player>\n";
+		echo "<div class=div_player>\n";
 
 		$menustatus[$channeldepth] = 1;		
 		$count = 1;
@@ -200,18 +201,18 @@ else
 		while($count < $channeldepth)
 	    {
 			if ($menustatus[$count] == 0)
-				echo "<img border=0 src=./images/list_tree_space.gif>";
+				echo "<img src=\"images/list_tree_space.gif\" alt=\"\">";
 			else
-				echo "<img border=0 src=./images/list_tree_line.gif>";
+				echo "<img src=\"images/list_tree_line.gif\" alt=\"\">";
 		    $count++;
 	    }
 
 		if ($playerobject->userid == $lastid)
-			echo "<img border=0 src=./images/list_tree_end.gif>";
+			echo "<img src=\"images/list_tree_end.gif\" alt=\"\">";
 		else 
-			echo "<img border=0 src=./images/list_tree_mid.gif>";
-		echo "<img border=0 src=./images/list_player.gif>";
-		echo $playerobject->name . " ";
+			echo "<img src=\"images/list_tree_mid.gif\" alt=\"\">";
+		echo "<img src=\"images/list_player.gif\" alt=\"\">";
+		echo $playerobject->name;
 
 		miseEnFormeAdresse($playerobject->address);
 
@@ -227,6 +228,11 @@ else
 			echo $arrayAdresse[0].':'.$arrayAdresse[1].':'.$arrayAdresse[2].':'.$arrayAdresse[3].
 						':'.$arrayAdresse[4].':'.$arrayAdresse[5].':'.$arrayAdresse[6].':'.$arrayAdresse[7];
 	}
+
+	if(empty($_GET['serverid']))
+		$serverid = -1;
+	else
+		$serverid = $_GET['serverid'];
 
 	if($serverid != -1)
 	{
