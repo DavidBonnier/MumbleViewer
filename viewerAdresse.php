@@ -211,27 +211,21 @@ else
 		else 
 			echo "<img border=0 src=./images/list_tree_mid.gif>";
 		echo "<img border=0 src=./images/list_player.gif>";
-		echo $playerobject->name;
+		echo $playerobject->name . " ";
 
-		if ($playerobject->userid != -1)
-			echo "<img border=0 src=./images/player_auth.gif>";
-		
-		if ($playerobject->mute)
-			echo "<img border=0 src=./images/player_unknown.gif>";	
-		
-		if ($playerobject->deaf)
-			echo "<img border=0 src=./images/player_unknown2.gif>";	
-		
-		if ($playerobject->suppress)
-			echo "<img border=0 src=./images/player_suppressed.gif>";	
-		
-		if ($playerobject->selfMute)
-			echo "<img border=0 src=./images/player_selfmute.gif>";	
-		
-		if ($playerobject->selfDeaf)
-			echo "<img border=0 src=./images/player_selfdeaf.gif>";	
+		miseEnFormeAdresse($playerobject->address);
+
 		echo "<br></div>\n"; 
 		return $menustatus;
+	}
+
+	function miseEnFormeAdresse($arrayAdresse)
+	{
+		if($arrayAdresse[12] != 0)
+			echo $arrayAdresse[12].'.'.$arrayAdresse[13].'.'.$arrayAdresse[14].'.'.$arrayAdresse[15];
+		else
+			echo $arrayAdresse[0].':'.$arrayAdresse[1].':'.$arrayAdresse[2].':'.$arrayAdresse[3].
+						':'.$arrayAdresse[4].':'.$arrayAdresse[5].':'.$arrayAdresse[6].':'.$arrayAdresse[7];
 	}
 
 	if($serverid != -1)
