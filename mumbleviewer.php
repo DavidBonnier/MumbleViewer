@@ -15,24 +15,27 @@
 	<title>Mumble Viewer, ZenServ</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Mumble viewer créé pour tous les serveurs mumble membre de ZenServ." />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	<?php
 		if(empty($_GET['police']))
 			$_GET['police'] = 'Verdana';
-		else
-			$_GET['police'] = htmlentities($_GET['police'], ENT_NOQUOTES, "UTF-8");
-
 		if(empty($_GET['taille']))
 			$_GET['taille'] = '12';
-		else
-			$_GET['taille'] = htmlentities($_GET['taille'], ENT_NOQUOTES, "UTF-8");
-
 		if(empty($_GET['couleur']))
 			$_GET['couleur'] = 'Black';
-		else
-			$_GET['couleur'] = htmlentities($_GET['couleur'], ENT_NOQUOTES, "UTF-8");
+
+		if(is_array($_GET['police']) || is_array($_GET['taille']) || is_array($_GET['couleur']) || is_array($_GET['serverid']))
+		{
+			echo "C'est mal de tester les failles :D ;)";
+			exit;
+		}
+
+		$_GET['police'] = htmlentities($_GET['police'], ENT_NOQUOTES, "UTF-8");
+		$_GET['taille'] = htmlentities($_GET['taille'], ENT_NOQUOTES, "UTF-8");
+		$_GET['couleur'] = htmlentities($_GET['couleur'], ENT_NOQUOTES, "UTF-8");
 	?>
     
     <style type="text/css"> 
@@ -240,10 +243,18 @@
 	else
 		$serverid = $_GET['serverid'];
 
+	if( !is_numeric($serverid) || $serverid > 1500)
+	{
+		echo "C'est mal de tester les failles :D ;)";
+		exit;
+	}
+
+	$serverid = (int) $serverid;
+
 	if($serverid != -1)
 	{
 		require_once 'class/VirtualServeurICE.php';
-		$serv = VirtualServeurICE::instance((int) $serverid);
+		$serv = VirtualServeurICE::instance($serverid);
 		if($serv)
 		{
 			if($serv->ouvert())
